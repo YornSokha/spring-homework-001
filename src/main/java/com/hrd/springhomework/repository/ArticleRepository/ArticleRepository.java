@@ -10,4 +10,10 @@ public interface ArticleRepository {
 //    void update(Article article, Article articleUpdate);
 //    Article find(Article article);
     List<Article> findAll();
+
+    Article find(int id);
+
+    void update(Article article);
+
+    int getLastId();
 }

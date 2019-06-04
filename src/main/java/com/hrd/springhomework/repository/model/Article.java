@@ -1,16 +1,18 @@
 package com.hrd.springhomework.repository.model;
 
+import javax.validation.constraints.NotEmpty;
+
 public class Article {
-    private static int ids = 0;
     private int id;
+    @NotEmpty
     private String title;
+    @NotEmpty
     private String author;
     private String description;
     private String image;
 
-    public Article(String title, String author, String description, String image) {
-        this.id = ++ids;
-        System.out.println("paramet" + id);
+    public Article(int id, @NotEmpty String title, @NotEmpty String author, String description, String image) {
+        this.id = id;
         this.title = title;
         this.author = author;
         this.description = description;
@@ -18,8 +20,6 @@ public class Article {
     }
 
     public Article() {
-        this.id = ++ids;
-        System.out.println("default " + id);
     }
 
     public int getId() {

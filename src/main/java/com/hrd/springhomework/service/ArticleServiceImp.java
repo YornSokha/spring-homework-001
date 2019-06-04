@@ -16,6 +16,22 @@ public class ArticleServiceImp implements ArticleService {
     public void setArticleRepository(ArticleRepository articleRepository){
         this.articleRepository = articleRepository;
     }
+
+    @Override
+    public int getLastId() {
+        return articleRepository.getLastId();
+    }
+
+    @Override
+    public void update(Article article) {
+        articleRepository.update(article);
+    }
+
+    @Override
+    public Article find(int id) {
+        return articleRepository.find(id);
+    }
+
     @Override
     public void add(Article article) {
         articleRepository.add(article);
