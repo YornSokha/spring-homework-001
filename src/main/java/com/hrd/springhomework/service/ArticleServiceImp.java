@@ -28,7 +28,7 @@ public class ArticleServiceImp implements ArticleService {
 
     @Override
     public boolean remove(int id) {
-        Article article = articleRepository.findAll().stream().filter(x -> (id == x.getId())).findAny().orElse(null);
+        Article article = articleRepository.findAll().stream().filter(x -> (id == x.getId())).findFirst().orElse(null);
         return articleRepository.remove(article);
     }
 //

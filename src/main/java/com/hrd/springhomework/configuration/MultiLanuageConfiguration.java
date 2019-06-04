@@ -30,7 +30,7 @@ public class MultiLanuageConfiguration implements WebMvcConfigurer {
     @Bean
     MessageSource messageSource(){
         ResourceBundleMessageSource resourceBundleMessageSource=new ResourceBundleMessageSource();
-        resourceBundleMessageSource.setBasenames("languages/messages");
+        resourceBundleMessageSource.setBasenames("languages/messages", "languages/messages_kh");
         resourceBundleMessageSource.setDefaultEncoding("UTF-8");
         return resourceBundleMessageSource;
     }
