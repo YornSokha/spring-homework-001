@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home Page</title>
+    <!--Call fragment-->
+    <th:block th:replace="fragment/style"></th:block>
+</head>
+<body>
+<div class="container-fluid">
+    <!--Navbar -->
+    <div th:replace="fragment/navbar :: navbar"></div>
+    <!--/.Navbar -->
+    <form th:action="@{/article/add}" th:method="post" th:object="${article}" enctype="multipart/form-data">
+        <div class="row  mt-3">
+            <div class="col col-lg-8 offset-2">
+                <div class="card">
+                    <div class="card-header">
+                        <head class="card-title d-flex justify-content-center">Article Management</head>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="">ID</label>
+                            <input type="text" class="form-control" disabled th:field="${article.id}">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Title</label>
+                            <input type="text" class="form-control" th:field="${article.title}">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Author</label>
+                            <input type="text" class="form-control" th:field="${article.author}">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Description</label>
+                            <input type="text" class="form-control" th:field="${article.description}">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Thumbnail</label>
+                            <!--<input type="file" class="form-control" th:field="${article.description}">-->
+                            <input type='file' id="imgInp" name="image"/>
+                            <img id="blah" style=" height: auto; width: 200px; display: block" alt="your image"/>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-sm btn-primary">ADD</button>
+                        <a th:href="@{/article}" class="btn btn-sm btn-danger">Go Back</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+
+</div>
+<th:block th:replace="fragment/script"></th:block>
+<script>
+
+    function readURL(input) {
+
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#blah').attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $("#imgInp").change(function () {
+        readURL(this);
+    });
+</script>
+</body>
+</html>
