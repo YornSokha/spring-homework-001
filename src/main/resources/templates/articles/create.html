@@ -12,7 +12,7 @@
     <!--Navbar -->
     <div th:replace="fragment/navbar :: navbar"></div>
     <!--/.Navbar -->
-    <form th:action="@{/article/add}" th:method="post" th:object="${article}" enctype="multipart/form-data">
+    <form th:action="@{/article/add}" th:method="post" th:object="${article}">
         <div class="row  mt-3">
             <div class="col col-lg-8 offset-2">
                 <div class="card">
@@ -36,12 +36,12 @@
                             <label for="">Description</label>
                             <input type="text" class="form-control" th:field="${article.description}">
                         </div>
-                        <div class="form-group">
-                            <label for="">Thumbnail</label>
-                            <!--<input type="file" class="form-control" th:field="${article.description}">-->
-                            <input type='file' id="imgInp" name="image"/>
-                            <img id="blah" style=" height: auto; width: 200px; display: block" alt="your image"/>
-                        </div>
+                        <!--<div class="form-group">-->
+                            <!--<label for="">Thumbnail</label>-->
+                            <!--&lt;!&ndash;<input type="file" class="form-control" th:field="${article.description}">&ndash;&gt;-->
+                            <!--<input type='file' id="imgInp" name="image"/>-->
+                            <!--<img id="blah" style=" height: auto; width: 200px; display: block" alt="your image"/>-->
+                        <!--</div>-->
                     </div>
                     <div class="card-footer">
                         <button type="submit" class="btn btn-sm btn-primary">ADD</button>

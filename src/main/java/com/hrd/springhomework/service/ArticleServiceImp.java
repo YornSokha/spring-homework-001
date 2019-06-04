@@ -6,6 +6,7 @@ import com.hrd.springhomework.service.ArticleService.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.validation.constraints.Null;
 import java.util.List;
 
 @Service
@@ -25,10 +26,11 @@ public class ArticleServiceImp implements ArticleService {
         return articleRepository.findAll();
     }
 
-//    @Override
-//    public void remove(int id) {
-//        Article article = articleRepository.
-//    }
+    @Override
+    public boolean remove(int id) {
+        Article article = articleRepository.findAll().stream().filter(x -> (id == x.getId())).findAny().orElse(null);
+        return articleRepository.remove(article);
+    }
 //
 //    @Override
 //    public void update(Article article) {

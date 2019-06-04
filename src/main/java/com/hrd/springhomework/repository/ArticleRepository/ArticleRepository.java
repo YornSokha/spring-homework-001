@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface ArticleRepository {
     boolean add(Article article);
-//    boolean remove(Article article);
+    boolean remove(Article article);
 //    void update(Article article, Article articleUpdate);
 //    Article find(Article article);
     List<Article> findAll();

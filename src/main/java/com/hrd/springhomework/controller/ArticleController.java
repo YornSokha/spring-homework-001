@@ -22,10 +22,10 @@ public class ArticleController {
     @Autowired
     public void setArticleService(ArticleService articleService){
         this.articleService = articleService;
-        for (int i = 0; i < 5; i++)
-            articleService.add(new Article("Spring","Sokha", "Cambodia", "fdjks"));
+//        for (int i = 0; i < 5; i++)
+//            articleService.add(new Article("Spring","Sokha", "Cambodia", "fdjks"));
     }
-    @GetMapping({"/", "/article"})
+    @GetMapping({"", "/article"})
     public String index(Model model){
         System.out.println(articleService.findAll().size());
         model.addAttribute("articles", articleService.findAll());
@@ -38,19 +38,27 @@ public class ArticleController {
         return "/articles/create";
     }
 
-    @PostMapping("/article/add")
-    public String add(@ModelAttribute Article article, @RequestParam MultipartFile file){
+    @DeleteMapping("/article/{id}")
+    public String delete(@PathVariable int id){
+        System.out.println(id);
+        articleService.remove(id);
+        return "redirect:/article";
+    }
 
-        String filename= UUID.randomUUID().toString();
-        if(!file.isEmpty()){
-            try {
-                Files.copy(file.getInputStream(),Paths.get("C:\\server\\image",file.getOriginalFilename()));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+    @PostMapping("/article/add")
+    public String add(@ModelAttribute Article article){
+
+//        String filename= UUID.randomUUID().toString();
+//        if(!file.isEmpty()){
+//            try {
+//                Files.copy(file.getInputStream(),Paths.get("C:\\server\\image",file.getOriginalFilename()));
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
 //        return "redirect:/fileForm";
         System.out.println(article.toString());
+        articleService.add(article);
         return "redirect:/article/create";
     }
 }

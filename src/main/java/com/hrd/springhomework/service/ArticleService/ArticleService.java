@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ArticleService {
     void add(Article article);
-//    void remove(int id);
+    boolean remove(int id);
 //    void update(int id, Article article);
 //    Article find(int id);
     List<Article> findAll();

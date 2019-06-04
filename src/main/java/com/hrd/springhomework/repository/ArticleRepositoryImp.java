@@ -22,10 +22,10 @@ public class ArticleRepositoryImp implements ArticleRepository {
         return articleList;
     }
 
-//    @Override
-//    public boolean remove(Article article) {
-//        return articleList.remove(article);
-//    }
+    @Override
+    public boolean remove(Article article) {
+        return articleList.remove(article);
+    }
 //
 //    @Override
 //    public void update(Article article, Article articleUpdate) {

@@ -15,36 +15,46 @@
     <!--/.Navbar -->
     <!--table.table.table-stripped>(thead.thead-dark>tr>th*6)+(tbody)-->
     <a type="button" th:href="@{/article/create}" class="btn btn-primary">ADD</a>
-    <table class="table table-sm table-stripped">
-        <thead class="thead-dark">
-        <tr>
-            <th>ID</th>
-            <th>Title</th>
-            <th>Author</th>
-            <th>Description</th>
-            <th>Thumbnail</th>
-            <th>Action</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="article, articleStt : ${articles}">
-            <td th:text="${article.id}"></td>
-            <td th:text="${article.title}"></td>
-            <td th:text="${article.author}"></td>
-            <td th:text="${article.description}"></td>
-            <td th:text="${article.image}"></td>
-            <td>
-                <a href="" data-toggle="tooltip" data-placement="top"
-                   title="View" th:attr="data-id=${article.id}"><i class="far fa-2x fa-eye"></i></a>
-                <a href="" data-toggle="tooltip" data-placement="top"
-                   title="Edit" th:attr="data-id=${article.id}"><i class="far fa-2x text-primary fa-edit"></i></a>
-                <a href="" data-toggle="tooltip" data-placement="top"
-                   title="delete" th:attr="data-id=${article.id}"><i class="far fa-2x text-danger fa-trash-alt"></i></a>
-            </td>
+    <div th:if="${#lists.size(articles) == 0}">
+        <h1>No data</h1>
+    </div>
+    <div th:unless="${#lists.size(articles) == 0}">
+        <table class="table table-sm table-stripped">
+            <thead class="thead-dark">
+            <tr>
+                <th>ID</th>
+                <th th:text="#{title}"></th>
+                <th th:text="#{author}"></th>
+                <th>Description</th>
+                <th>Thumbnail</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="article, articleStt : ${articles}">
+                <td th:text="${article.id}"></td>
+                <td th:text="${article.title}"></td>
+                <td th:text="${article.author}"></td>
+                <td th:text="${article.description}"></td>
+                <td th:text="${article.image}"></td>
+                <td>
+                    <a href="" data-toggle="tooltip" data-placement="top"
+                       title="View" th:attr="data-id=${article.id}"><i class="far fa-2x fa-eye"></i></a>
+                    <a href="" data-toggle="tooltip" data-placement="top"
+                       title="Edit" th:attr="data-id=${article.id}"><i class="far fa-2x text-primary fa-edit"></i></a>
+                    <form th:action="@{/article/{id}(id=${article.id})}" th:method="delete">
+                        <button th:type="submit" data-toggle="tooltip" data-placement="top"
+                           title="delete" th:attr="data-id=${article.id}"><i class="far fa-2x text-danger fa-trash-alt"></i></button>
+                    </form>
+                </td>
 
-        </tr>
-        </tbody>
-    </table>
+            </tr>
+
+            </tbody>
+        </table>
+
+    </div>
+
     <p>Total Record:</p>
 </div>
 
