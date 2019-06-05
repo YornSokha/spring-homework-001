@@ -37,7 +37,7 @@
                         </div>
                         <div class="form-group">
                             <label for="" th:text="#{article.author}">Author</label>
-                            <span class="text-danger" th:if="${#fields.hasErrors('author')}" th:text="'*' + #{article.author_not_empty}"></span>
+                            <span class="text-danger" th:if="${#fields.hasErrors('author')}" th:errors="*{author}" ></span>
                             <input type="text" class="form-control" th:field="*{author}" th:value="*{author}">
                         </div>
                         <div class="form-group">

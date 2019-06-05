@@ -4,9 +4,9 @@ import javax.validation.constraints.NotEmpty;
 
 public class Article {
     private int id;
-    @NotEmpty
+    @NotEmpty()
     private String title;
-    @NotEmpty
+    @NotEmpty(message = "{article.author_not_empty}")
     private String author;
     private String description;
     private String image;

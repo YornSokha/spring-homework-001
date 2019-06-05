@@ -6,6 +6,10 @@
     margin-left: auto;
 }
 
+body{
+    font-family: 'Kantumruy', sans-serif;
+}
+
 .custom-file-input ~ .custom-file-label::after {
     content: "Button Text";
 }
