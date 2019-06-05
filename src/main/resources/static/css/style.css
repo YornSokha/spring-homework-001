@@ -5,3 +5,34 @@
     margin-right: auto;
     margin-left: auto;
 }
+
+.custom-file-input ~ .custom-file-label::after {
+    content: "Button Text";
+}
+
+.img-thumbnail {
+    padding: .25rem;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: .25rem;
+    width: 65px;
+    height: auto;
+}
+
+.center{
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+.btn-brown{
+    background-color: #ab4e25;
+}
+
+.mb-custom{
+    margin-bottom: 5rem!important;
+}
+
+.mt-custom{
+    margin-top: 5rem!important;
+}

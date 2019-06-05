@@ -9,57 +9,81 @@
 </head>
 <body>
 <div class="container-fluid">
-    <!--Navbar -->
-    <!--upload by sokha-->
-    <div th:replace="fragment/navbar :: navbar"></div>
     <!--/.Navbar -->
-    <!--table.table.table-stripped>(thead.thead-dark>tr>th*6)+(tbody)-->
-    <a type="button" th:href="@{/article/create}" class="btn btn-sm btn-primary" th:text="#{article.add_new}">ADD</a>
-    <div th:if="${#lists.size(articles) == 0}">
-        <h1>No data</h1>
+    <div th:replace="fragment/navbar :: navbar"></div>
+    <!--'<i class='far fa-2x fa-plus-square'></i> ' +-->
+    <div class="card">
+        <div class="card-header">
+            <a th:href="@{/article/create}" class="btn btn-primary" th:utext="#{article.add_new}"></a>
+        </div>
+        <div class="card-body">
+            <div th:if="${#lists.size(articles) == 0}">
+                <h1>No data</h1>
+            </div>
+            <div th:unless="${#lists.size(articles) == 0}">
+                <table class="table table-striped">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th th:text="#{article.identifier}"></th>
+                        <th th:text="#{article.title}"></th>
+                        <th th:text="#{article.author}"></th>
+                        <th th:text="#{article.description}"></th>
+                        <th th:text="#{article.thumbnail}"></th>
+                        <th th:text="#{article.action}"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="article, articleStt : ${articles}">
+                        <td th:text="${article.id}"></td>
+                        <td th:text="${article.title}"></td>
+                        <td th:text="${article.author}"></td>
+                        <td th:text="${article.description}"></td>
+                        <td>
+                            <img class="img-thumbnail" style="width: 61px" th:src="${article.image eq null} ? '/img/sample.jpg' : '/img/' + ${article.image}">
+                        </td>
+                        <td>
+                            <a th:href="@{/article/show/{id}(id=${article.id})}" data-toggle="tooltip" data-placement="top"
+                               title="View" th:attr="data-id=${article.id}"><i class="far fa-2x fa-eye"></i></a>
+                            <a th:href="@{/article/edit/{id}(id=${article.id})}" data-toggle="tooltip" data-placement="top"
+                               title="Edit" th:attr="data-id=${article.id}"><i class="far fa-2x text-primary fa-edit"></i></a>
+                            <form th:action="@{/article/{id}(id=${article.id})}" th:method="delete" style="display: inline">
+                                <a onclick="$(this).parent().submit()" data-toggle="tooltip" data-placement="top"
+                                   title="delete" th:attr="data-id=${article.id}"><i class="far fa-2x text-danger fa-trash-alt"></i></a>
+                            </form>
+                        </td>
+
+                    </tr>
+
+                    </tbody>
+                </table>
+
+            </div>
+            <div class="d-flex justify-content-center">
+                <nav aria-label="...">
+                    <ul class="pagination">
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" tabindex="-1">Previous</a>
+                        </li>
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item active">
+                            <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">Next</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <div class="card-footer">
+            <p>Total Record: <span th:text="${#lists.size(articles)}"></span></p>
+        </div>
     </div>
-    <div th:unless="${#lists.size(articles) == 0}">
-        <table class="table table-sm table-stripped">
-            <thead class="thead-dark">
-            <tr>
-                <th>ID</th>
-                <th th:text="#{title}"></th>
-                <th th:text="#{author}"></th>
-                <th>Description</th>
-                <th>Thumbnail</th>
-                <th>Action</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="article, articleStt : ${articles}">
-                <td th:text="${article.id}"></td>
-                <td th:text="${article.title}"></td>
-                <td th:text="${article.author}"></td>
-                <td th:text="${article.description}"></td>
-                <td>
-                    <img style="height: 53px; width: 67px;" th:src="${article.image eq null} ? '/img/sample.jpg' : '/img/' + ${article.image}">
-                </td>
-                <td>
-                    <a th:href="@{/article/show/{id}(id=${article.id})}" data-toggle="tooltip" data-placement="top"
-                       title="View" th:attr="data-id=${article.id}"><i class="far fa-2x fa-eye"></i></a>
-                    <a th:href="@{/article/edit/{id}(id=${article.id})}" data-toggle="tooltip" data-placement="top"
-                       title="Edit" th:attr="data-id=${article.id}"><i class="far fa-2x text-primary fa-edit"></i></a>
-                    <form th:action="@{/article/{id}(id=${article.id})}" th:method="delete" style="display: inline">
-                        <a onclick="$(this).parent().submit()" data-toggle="tooltip" data-placement="top"
-                           title="delete" th:attr="data-id=${article.id}"><i class="far fa-2x text-danger fa-trash-alt"></i></a>
-                    </form>
-                </td>
 
-            </tr>
 
-            </tbody>
-        </table>
-
-    </div>
-
-    <p>Total Record: <span th:text="${#lists.size(articles)}"></span></p>
 </div>
-
+<div th:replace="/fragment/footer"></div>
 <th:block th:replace="fragment/script"></th:block>
 </body>
 </html>

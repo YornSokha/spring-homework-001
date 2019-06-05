@@ -10,6 +10,13 @@ import java.util.List;
 @Repository
 public class ArticleRepositoryImp implements ArticleRepository {
     private List<Article> articleList = new ArrayList<>();
+    public static int count;
+    public static int currentPage;
+
+    private static void updateProperties(int c, int cp){
+        count = c;
+        currentPage = cp;
+    }
 
     @Override
     public boolean add(Article article) {
@@ -19,7 +26,8 @@ public class ArticleRepositoryImp implements ArticleRepository {
     @Override
     public int getLastId() {
         int size = articleList.size();
-        return (size != 0) ? articleList.get(articleList.size() - 1).getId() : 0;
+        System.out.println("Size " + size);
+        return (size != 0) ? articleList.get(articleList.size() - 1).getId() : 1;
     }
 
     private int getIndex(Article article) {
