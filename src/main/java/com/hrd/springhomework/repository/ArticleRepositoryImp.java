@@ -16,6 +16,25 @@ public class ArticleRepositoryImp implements ArticleRepository {
         return articleList.add(article);
     }
 
+    @Override
+    public int getLastId() {
+        int size = articleList.size();
+        return (size != 0) ? articleList.get(articleList.size() - 1).getId() : 0;
+    }
+
+    private int getIndex(Article article) {
+        return articleList.indexOf(articleList.stream().filter(x -> article.getId() == x.getId()).findFirst().orElse(null));
+    }
+
+    @Override
+    public void update(Article article) {
+        articleList.set(getIndex(article), article);
+    }
+
+    @Override
+    public Article find(int id) {
+        return articleList.stream().filter(x -> (id == x.getId())).findFirst().orElse(null);
+    }
 
     @Override
     public List<Article> findAll() {
