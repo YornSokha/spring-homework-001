@@ -13,6 +13,8 @@ public interface ArticleRepository {
 
     Article find(int id);
 
+    List<Article> paginate(int page, int limit);
+
     void update(Article article);
 
     int getLastId();

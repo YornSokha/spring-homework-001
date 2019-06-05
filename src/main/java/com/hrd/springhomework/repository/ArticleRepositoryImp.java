@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 public class ArticleRepositoryImp implements ArticleRepository {
@@ -20,7 +21,9 @@ public class ArticleRepositoryImp implements ArticleRepository {
 
     @Override
     public boolean add(Article article) {
-        return articleList.add(article);
+        articleList.add(article);
+        count = articleList.size();
+        return true;
     }
 
     @Override
@@ -50,8 +53,16 @@ public class ArticleRepositoryImp implements ArticleRepository {
     }
 
     @Override
+    public List<Article> paginate(int page, int limit) {
+        currentPage = page;
+        return articleList.stream().skip(page * limit).limit(limit).collect(Collectors.toCollection(ArrayList::new));
+    }
+
+    @Override
     public boolean remove(Article article) {
-        return articleList.remove(article);
+        boolean result = articleList.remove(article);
+        count = articleList.size();
+        return result;
     }
 //
 //    @Override

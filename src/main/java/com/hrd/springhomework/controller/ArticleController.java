@@ -1,6 +1,7 @@
 package com.hrd.springhomework.controller;
 
 import com.hrd.springhomework.helper.UploadImage;
+import com.hrd.springhomework.repository.ArticleRepositoryImp;
 import com.hrd.springhomework.repository.model.Article;
 import com.hrd.springhomework.service.ArticleService.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
-
 @Controller
 public class ArticleController {
 
@@ -23,14 +23,20 @@ public class ArticleController {
     public void setArticleService(ArticleService articleService) {
         this.articleService = articleService;
         String[] imageNames = {"731cc916-7a4e-4574-9a21-f012e03ad17f.jpg"};
-        for (int i = 0; i < 100; i++)
+        for (int i = 0; i < 78; i++)
             articleService.add(new Article(i + 1, "Spring", "Sokha", "Cambodia", imageNames[0]));
     }
 
     @GetMapping({"", "/article"})
-    public String index(Model model) {
+    public String index(Model model, @RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "10") Integer limit) {
+        System.out.println("Page : " + page + ", Limit : " + limit);
         System.out.println(articleService.findAll().size());
-        model.addAttribute("articles", articleService.findAll());
+        model.addAttribute("articles", articleService.paginate(page, limit));
+        model.addAttribute("totalRecord", ArticleRepositoryImp.count);
+        model.addAttribute("currentPage", ArticleRepositoryImp.currentPage);
+        //Page starts from zero
+        int lastPage = (ArticleRepositoryImp.count / limit) + (ArticleRepositoryImp.count % limit == 0 ? -1 : 0);
+        model.addAttribute("lastPage", lastPage);
         return "/articles/index";
     }
 

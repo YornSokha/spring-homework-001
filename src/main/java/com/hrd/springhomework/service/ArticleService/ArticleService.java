@@ -12,6 +12,8 @@ public interface ArticleService {
 //    Article find(int id);
     List<Article> findAll();
 
+    List<Article> paginate(int page, int limit);
+
     Article find(int id);
 
     void update(Article article);

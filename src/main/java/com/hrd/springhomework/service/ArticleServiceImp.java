@@ -23,6 +23,11 @@ public class ArticleServiceImp implements ArticleService {
     }
 
     @Override
+    public List<Article> paginate(int page, int limit) {
+        return articleRepository.paginate(page, limit);
+    }
+
+    @Override
     public void update(Article article) {
         articleRepository.update(article);
     }
