@@ -6,14 +6,14 @@ import com.hrd.springhomework.service.ArticleService.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.validation.constraints.Null;
 import java.util.List;
 
 @Service
 public class ArticleServiceImp implements ArticleService {
     private ArticleRepository articleRepository;
+
     @Autowired
-    public void setArticleRepository(ArticleRepository articleRepository){
+    public void setArticleRepository(ArticleRepository articleRepository) {
         this.articleRepository = articleRepository;
     }
 
@@ -52,15 +52,5 @@ public class ArticleServiceImp implements ArticleService {
         Article article = articleRepository.findAll().stream().filter(x -> (id == x.getId())).findFirst().orElse(null);
         return articleRepository.remove(article);
     }
-//
-//    @Override
-//    public void update(Article article) {
-//
-//    }
-//
-//    @Override
-//    public Article view(Article article) {
-//        return null;
-//    }
 
 }

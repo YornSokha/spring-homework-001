@@ -6,13 +6,14 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Objects;
 import java.util.UUID;
 
 public class UploadImage {
     public static boolean upload(Article article, MultipartFile file) {
         String imageName = UUID.randomUUID().toString();
         String extension;
-        if (file != null && !file.getOriginalFilename().isEmpty()) {
+        if (file != null && !Objects.requireNonNull(file.getOriginalFilename()).isEmpty()) {
             extension = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf('.'));
             imageName += extension;
             try {

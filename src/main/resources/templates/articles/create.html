@@ -13,7 +13,7 @@
 <div class="container">
     <!--/.Navbar -->
     <form th:action="@{/article/add}" method="post" th:object="${article}" enctype="multipart/form-data">
-        <div class="row  mt-5">
+        <div class="mt-5">
             <div class="col col-lg-8 offset-2">
                 <div class="card mb-custom">
                     <div class="card-header">
@@ -51,7 +51,7 @@
                                 <label class="custom-file-label" for="file">
                                     Select file...
                                 </label>
-                                <img id="blah" class="mt-4" th:src="'/img/sample.jpg'"
+                                <img id="blah" class="mt-4 img-thumbnail" th:src="'/img/sample.jpg'"
                                      style=" margin-left: auto; margin-right: auto; width: 512px; display: block"
                                      alt="your image"/>
                             </div>

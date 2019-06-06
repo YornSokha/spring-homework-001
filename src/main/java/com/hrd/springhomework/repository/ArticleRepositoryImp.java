@@ -14,11 +14,6 @@ public class ArticleRepositoryImp implements ArticleRepository {
     public static int count;
     public static int currentPage;
 
-    private static void updateProperties(int c, int cp){
-        count = c;
-        currentPage = cp;
-    }
-
     @Override
     public boolean add(Article article) {
         articleList.add(article);
@@ -29,12 +24,14 @@ public class ArticleRepositoryImp implements ArticleRepository {
     @Override
     public int getLastId() {
         int size = articleList.size();
-        System.out.println("Size " + size);
-        return (size != 0) ? articleList.get(articleList.size() - 1).getId() : 1;
+        return (size != 0) ? articleList.get(size - 1).getId() : 1;
     }
 
     private int getIndex(Article article) {
-        return articleList.indexOf(articleList.stream().filter(x -> article.getId() == x.getId()).findFirst().orElse(null));
+        return articleList.indexOf(articleList.stream()
+                .filter(x -> article.getId() == x.getId())
+                .findFirst()
+                .orElse(null));
     }
 
     @Override
@@ -64,15 +61,5 @@ public class ArticleRepositoryImp implements ArticleRepository {
         count = articleList.size();
         return result;
     }
-//
-//    @Override
-//    public void update(Article article, Article articleUpdate) {
-//        articleList.set(articleList.indexOf(article), articleUpdate);
-//    }
-//
-//    @Override
-//    public Article find(Article article) {
-//        return article;
-//    }
 
 }

@@ -13,7 +13,7 @@
     <div th:replace="fragment/navbar :: navbar"></div>
     <!--/.Navbar -->
     <form th:action="@{/article/update}" method="post" th:object="${article}" enctype="multipart/form-data">
-        <div class="row  mt-5">
+        <div class="mt-5">
             <div class="col col-lg-8 offset-2">
                 <div class="card mb-custom">
                     <div class="card-header">
@@ -41,7 +41,7 @@
                             <label for="" th:text="#{article.description}">Description</label>
                             <!--<input type="text" class="form-control" th:field="*{description}" th:value="*{description}"-->
                                    <!--disabled>-->
-                            <textarea th:field="*{description}" class="form-control" cols="30" rows="5" th:text="*{description}" readonly></textarea>
+                            <textarea th:field="*{description}" class="form-control article" cols="30" rows="5" th:text="*{description}" readonly></textarea>
 
                         </div>
                         <div class="form-group">

@@ -17,7 +17,8 @@
     <div class="card">
         <div class="card-header">
             <a th:href="@{/article/create}" class="btn btn-light-dark text-white" th:utext="#{article.add_new}"></a>
-            <a class="btn btn-light-dark text-white float-right" id="btn-change-navbar" th:text="#{btn.navbar-dropdown}"></a>
+            <a class="btn btn-light-dark text-white float-right" id="btn-change-navbar"
+               th:text="#{btn.navbar-dropdown}"></a>
         </div>
         <div class="card-body">
             <div th:if="${#lists.size(articles) == 0}">
@@ -40,18 +41,25 @@
                         <td class="td-center" th:text="${article.id}"></td>
                         <td class="td-center" th:text="${article.title}"></td>
                         <td class="td-center" th:text="${article.author}"></td>
-                        <td class="td-center" th:text="${article.description}"></td>
+                        <td class="td-center custom-text" th:text="${article.description}"></td>
                         <td>
-                            <img class="img-thumbnail" style="width: 61px" th:src="${article.image eq null} ? '/img/sample.jpg' : '/img/' + ${article.image}">
+                            <img class="img-thumbnail" style="width: 61px; height: 57px; margin-left: 1.3rem;"
+                                 th:src="${article.image eq null} ? '/img/sample.jpg' : '/img/' + ${article.image}">
                         </td>
                         <td class="td-center">
-                            <a th:href="@{/article/show/{id}(id=${article.id})}" data-toggle="tooltip" data-placement="top"
-                               title="View" th:attr="data-id=${article.id}"><i class="far fa-1x-custom fa-eye text-warning"></i></a>
-                            <a th:href="@{/article/edit/{id}(id=${article.id})}" data-toggle="tooltip" data-placement="top"
-                               title="Edit" th:attr="data-id=${article.id}"><i class="far fa-1x-custom text-primary fa-edit"></i></a>
-                            <form th:action="@{/article/{id}(id=${article.id})}" th:method="delete" style="display: inline">
+                            <a th:href="@{/article/show/{id}(id=${article.id})}" data-toggle="tooltip"
+                               data-placement="top"
+                               title="View" th:attr="data-id=${article.id}"><i
+                                    class="far fa-1x-custom fa-eye text-warning"></i></a>
+                            <a th:href="@{/article/edit/{id}(id=${article.id})}" data-toggle="tooltip"
+                               data-placement="top"
+                               title="Edit" th:attr="data-id=${article.id}"><i
+                                    class="far fa-1x-custom text-primary fa-edit"></i></a>
+                            <form th:action="@{/article/{id}(id=${article.id})}" th:method="delete"
+                                  style="display: inline">
                                 <a data-toggle="tooltip" data-placement="top"
-                                   title="delete" class="delete" th:attr="data-id=${article.id}"><i class="far fa-1x-custom text-danger fa-trash-alt"></i></a>
+                                   title="delete" class="delete" th:attr="data-id=${article.id}"><i
+                                        class="far fa-1x-custom text-danger fa-trash-alt"></i></a>
                             </form>
                         </td>
 
@@ -63,7 +71,7 @@
             </div>
         </div>
         <div class="card-footer">
-            <p class="h5"th:text="#{article.total_articles(''+${totalRecord})}"></p>
+            <p class="h5" th:text="#{article.total_articles(''+${totalRecord})}"></p>
         </div>
     </div>
 

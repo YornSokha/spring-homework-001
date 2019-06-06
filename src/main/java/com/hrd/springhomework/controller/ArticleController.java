@@ -5,7 +5,6 @@ import com.hrd.springhomework.repository.ArticleRepositoryImp;
 import com.hrd.springhomework.repository.model.Article;
 import com.hrd.springhomework.service.ArticleService.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -20,15 +19,21 @@ import javax.validation.Valid;
 public class ArticleController {
 
     private ArticleService articleService;
-    private String currentImage = null;
 
     @Autowired
     public void setArticleService(ArticleService articleService) {
         this.articleService = articleService;
+        generateRecord();
+    }
+
+    private void generateRecord() {
         String[] imageNames = {"731cc916-7a4e-4574-9a21-f012e03ad17f.jpg",
                 "08d6a795-5973-4681-b885-ad85e9b8ca3f.jpg",
-                "673c875b-0598-45a1-a260-0e4baf971059.jpg"};
-        String description = "Dogs (Canis lupus familiaris) are domesticated mammals, " +
+                "673c875b-0598-45a1-a260-0e4baf971059.jpg",
+                "340d2d90-efa0-4831-8340-a2d911be506e.jpg",
+                "4751943d-5818-4666-bdd8-22350fe3679c.jpg",
+                "cedab41e-6176-452f-8264-d086d98dd550.jpg"};
+        String description = "Dogs (Canis lupus familia1ris) are domesticated mammals, " +
                 "not natural wild animals. They were originally bred from wolves. They have " +
                 "been bred by humans for a long time, and were the first animals ever to be domesticated.";
         for (int i = 0; i < 78; i++) {
@@ -94,7 +99,7 @@ public class ArticleController {
             return "redirect:/article/edit/" + article.getId();
         }
 
-        currentImage = articleService.find(article.getId()).getImage();
+        String currentImage = articleService.find(article.getId()).getImage();
 
         if (!UploadImage.upload(article, file)) {
             article.setImage(currentImage);
