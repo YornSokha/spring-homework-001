@@ -8,11 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+
 @Controller
 public class ArticleController {
 
@@ -22,20 +25,28 @@ public class ArticleController {
     @Autowired
     public void setArticleService(ArticleService articleService) {
         this.articleService = articleService;
-        String[] imageNames = {"731cc916-7a4e-4574-9a21-f012e03ad17f.jpg"};
-        for (int i = 0; i < 78; i++)
-            articleService.add(new Article(i + 1, "Spring", "Sokha", "Cambodia", imageNames[0]));
+        String[] imageNames = {"731cc916-7a4e-4574-9a21-f012e03ad17f.jpg",
+                "08d6a795-5973-4681-b885-ad85e9b8ca3f.jpg",
+                "673c875b-0598-45a1-a260-0e4baf971059.jpg"};
+        String description = "Dogs (Canis lupus familiaris) are domesticated mammals, " +
+                "not natural wild animals. They were originally bred from wolves. They have " +
+                "been bred by humans for a long time, and were the first animals ever to be domesticated.";
+        for (int i = 0; i < 78; i++) {
+            int index = i % imageNames.length;
+            articleService.add(new Article(i + 1, "A story of a dog", "Yorn Sokha", description, imageNames[index]));
+        }
     }
 
     @GetMapping({"", "/article"})
-    public String index(Model model, @RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "10") Integer limit) {
+    public String index(Model model, @RequestParam(defaultValue = "1") Integer page, @RequestParam(defaultValue = "10") Integer limit) {
         System.out.println("Page : " + page + ", Limit : " + limit);
+        page--;
         System.out.println(articleService.findAll().size());
+        // page - 1 because paginate array list starts with 0, so need to minus 1
         model.addAttribute("articles", articleService.paginate(page, limit));
         model.addAttribute("totalRecord", ArticleRepositoryImp.count);
-        model.addAttribute("currentPage", ArticleRepositoryImp.currentPage);
-        //Page starts from zero
-        int lastPage = (ArticleRepositoryImp.count / limit) + (ArticleRepositoryImp.count % limit == 0 ? -1 : 0);
+        model.addAttribute("currentPage", ArticleRepositoryImp.currentPage + 1);
+        int lastPage = (ArticleRepositoryImp.count / limit) + (ArticleRepositoryImp.count % limit == 0 ? 0 : 1);
         model.addAttribute("lastPage", lastPage);
         return "/articles/index";
     }
@@ -55,12 +66,6 @@ public class ArticleController {
         return "redirect:/article";
     }
 
-    @GetMapping("/article/edit/{id}")
-    public String edit(@PathVariable int id, Model model) {
-        model.addAttribute("article", articleService.find(id));
-        return "/articles/edit";
-    }
-
     @GetMapping("/article/show/{id}")
     public String show(@PathVariable int id, Model model) {
         Article article = articleService.find(id);
@@ -70,31 +75,59 @@ public class ArticleController {
         return "/articles/show";
     }
 
+    @GetMapping("/article/edit/{id}")
+    public String edit(ModelMap model, @PathVariable int id) {
+        model.addAttribute("article", articleService.find(id));
+        model.addAttribute("org.springframework.validation.BindingResult.article", model.get("errorObject"));
+        return "/articles/edit";
+    }
+
     @PostMapping("/article/update")
-    public String update(@Valid @ModelAttribute Article article, BindingResult bindingResult, MultipartFile file) {
-        System.out.println("binding :" + bindingResult.getModel());
+    public String update(@Valid @ModelAttribute Article article,
+                         BindingResult bindingResult,
+                         RedirectAttributes redirectAttributes,
+                         MultipartFile file) {
+
         if (bindingResult.hasErrors()) {
             System.out.println("there is an error");
-            return "/articles/edit";
+            redirectAttributes.addFlashAttribute("errorObject", bindingResult);
+            return "redirect:/article/edit/" + article.getId();
         }
+
         currentImage = articleService.find(article.getId()).getImage();
+
         if (!UploadImage.upload(article, file)) {
             article.setImage(currentImage);
         }
 
-        System.out.println(article.toString());
         articleService.update(article);
         return "redirect:/";
     }
 
     @PostMapping("/article/add")
-    public String add(@Valid @ModelAttribute Article article, BindingResult bindingResult, MultipartFile file) {
+    public String add(@Valid @ModelAttribute Article article,
+                      BindingResult bindingResult,
+                      RedirectAttributes redirectAttributes,
+                      MultipartFile file) {
 
         if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("errorObject", bindingResult);
             return "/articles/create";
         }
+
         UploadImage.upload(article, file);
         articleService.add(article);
         return "redirect:/article/create";
+    }
+
+
+    @GetMapping("navbar")
+    public String getNabar() {
+        return "fragment/navbar :: navbar";
+    }
+
+    @GetMapping("navbar-dropdown")
+    public String getDropDownNavbar() {
+        return "fragment/navbar :: navbar-dropdown";
     }
 }

@@ -36,3 +36,13 @@ $('.delete').on('click', (e)=>{
         }
     })
 });
+let toggle = true;
+$('#btn-change-navbar').on('click', ()=>{
+    if(toggle === false){
+        toggle = true;
+        $('#navbar-replace').load('navbar-dropdown');
+    }else {
+        toggle = false;
+        $('#navbar-replace').load('navbar');
+    }
+})
